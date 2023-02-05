@@ -1,0 +1,23 @@
+SUBS(sig, "Thanks,", KC_T, KC_X)
+SUBS(fpga, "FPGA", KC_F, KC_P)
+
+COMB(leader, KC_LEAD, KC_F, KC_J)
+
+COMB(screen_shot, RSG(KC_S), KC_A, KC_F)
+COMB(win_expl, LGUI(KC_E), KC_D, KC_S)
+COMB(win_but, KC_LGUI, KC_J, KC_QUOT)
+
+COMB(escape, KC_ESC, KC_J, KC_K)
+
+// COMB(quote, KC_QUOT, KC_F, KC_D)
+COMB(quote, KC_SCLN, KC_F, KC_D)
+
+
+COMB(grv, KC_GRV, KC_U, KC_I)
+
+SUBS(s_qt, "'s", KC_S, KC_W)
+SUBS(t_qt, "'t", KC_T, KC_G)
+SUBS(v_qt, "'ve", KC_V, KC_F)
+SUBS(l_qt, "'ll", KC_L, KC_O)
+SUBS(m_qt, "'m", KC_M, KC_J)
+SUBS(r_qt, "'re", KC_F, KC_R)

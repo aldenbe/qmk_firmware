@@ -1,0 +1,23 @@
+# MCU name
+MCU = RP2040
+
+# Bootloader selection
+BOOTLOADER = rp2040
+
+RGBLIGHT_ENABLE = no        # Enable WS2812 RGB underlight.
+AUTO_SHIFT_ENABLE = yes
+VPATH  +=  keyboards/gboards/
+COMBO_ENABLE=yes
+LEADER_ENABLE = yes
+TAP_DANCE_ENABLE = yes
+
+LTO_ENABLE = yes
+CONSOLE_ENABLE = no
+COMMAND_ENABLE = no
+MOUSEKEY_ENABLE = no
+EXTRAKEY_ENABLE = no
+
+SPACE_CADET_ENABLE = no
+GRAVE_ESC_ENABLE = no
+MAGIC_ENABLE = no
+MUSIC_ENABLE = no

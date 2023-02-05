@@ -1,0 +1,8 @@
+SUBS(sig, "Thanks,", KC_T, KC_X)
+SUBS(fpga, "FPGA", KC_F, KC_P)
+
+COMB(screen_shot, RSG(KC_S), KC_A, KC_F)
+COMB(semicolon, KC_SCLN, KC_F, KC_D)
+COMB(escape, KC_ESC, KC_J, KC_K)
+
+COMB(leader, KC_LEAD, KC_F, KC_J)
