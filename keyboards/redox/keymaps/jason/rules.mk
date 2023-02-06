@@ -1,0 +1,5 @@
+RGBLIGHT_ENABLE = no
+AUTO_SHIFT_ENABLE = yes
+VPATH  +=  keyboards/gboards/
+COMBO_ENABLE=yes
+LEADER_ENABLE = yes

@@ -1,0 +1,4 @@
+SUBS(because, "because", KC_B, KC_C)
+SUBS(sig, "Thanks,", KC_T, KC_X)
+SUBS(fpga, "FPGA", KC_F, KC_P)
+COMB(leader, KC_LEAD, KC_DEL, KC_ENT)

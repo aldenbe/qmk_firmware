@@ -1,7 +1,7 @@
 {
-    "manufacturer": "junk",
+    "manufacturer": "Some regular dude",
     "keyboard_name": "trinidox",
-    "url": "www.google.com",
+    "url": "",
     "maintainer": "qmk",
     "usb": {
       "vid": "0xFEED",
