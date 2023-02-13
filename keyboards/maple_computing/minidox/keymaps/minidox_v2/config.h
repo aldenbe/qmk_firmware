@@ -78,20 +78,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    undef MATRIX_ROW_PINS
 #endif
 #define MATRIX_ROW_PINS \
-{ GP4, GP5, GP27, GP26 }
+{ GP2, GP3, GP4, GP5 }
 
 #ifdef MATRIX_COL_PINS
 #    undef MATRIX_COL_PINS
 #endif
 #define MATRIX_COL_PINS \
-    { GP8, GP9, GP7, GP6, GP28 }
+    { GP6, GP7, GP8, GP9, GP10 }
 
+#ifdef DIODE_DIRECTION
+#undef DIODE_DIRECTION
+#endif
+#define DIODE_DIRECTION ROW2COL
 
 /* Handedness. */
 #ifdef SPLIT_HAND_PIN
 #    undef SPLIT_HAND_PIN
 #endif
-#define SPLIT_HAND_PIN GP29
+#define SPLIT_HAND_PIN GP12
 
 #ifdef SPLIT_HAND_PIN_LOW_IS_LEFT
 #    undef SPLIT_HAND_PIN_LOW_IS_LEFT
@@ -103,25 +107,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef SOFT_SERIAL_PIN
 #    undef SOFT_SERIAL_PIN
 #endif
-#define SOFT_SERIAL_PIN GP1
+#define SOFT_SERIAL_PIN GP15
 
 
 /* RGB settings. */
 // #define RGB_DI_PIN GP0  // Per-key.
-#define RGB_DI_PIN GP10 // Underglow.
+#define RGB_DI_PIN GP11 // Underglow.
+#define DRIVER_LED_TOTAL 36
+#define RGB_MATRIX_SPLIT { 18, 18 }
+#define RGB_MATRIX_CENTER { 133, 54 }
 
 /* VBUS detection. */
-#define USB_VBUS_PIN GP19
+#define USB_VBUS_PIN GP21
 
 /* CRC. */
 #define CRC8_USE_TABLE
 #define CRC8_OPTIMIZE_SPEED
 
 /* Cirque trackpad over SPI. */
-#define SPI_SCK_PIN GP22
-#define SPI_MOSI_PIN GP23
-#define SPI_MISO_PIN GP20
-#define POINTING_DEVICE_CS_PIN GP21
+#define SPI_SCK_PIN GP18
+#define SPI_MOSI_PIN GP19
+#define SPI_MISO_PIN GP16
+#define POINTING_DEVICE_CS_PIN GP17
 #undef CIRQUE_PINNACLE_DIAMETER_MM
 #define CIRQUE_PINNACLE_DIAMETER_MM 40
 #define CIRQUE_PINNACLE_TAP_ENABLE
