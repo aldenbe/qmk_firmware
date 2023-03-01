@@ -24,6 +24,20 @@ typedef enum {
     TD_TRIPLE_HOLD
 } td_state_t;
 
+static uint16_t default_animation = RGB_MATRIX_CYCLE_SPIRAL;
+static int default_speed = 50;
+
+// static uint16_t secondary_animation = RGB_MATRIX_HUE_WAVE;
+// static int secondary_speed = 150;
+// static bool is_macro_recording = false;
+
+// Init
+void keyboard_post_init_user(void) {
+    rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
+    rgb_matrix_mode_noeeprom(default_animation);
+    rgb_matrix_set_speed_noeeprom(default_speed);
+}
+
 typedef struct {
     bool is_press_action;
     td_state_t state;

@@ -109,14 +109,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 #define SOFT_SERIAL_PIN GP15
 
-
-/* RGB settings. */
-// #define RGB_DI_PIN GP0  // Per-key.
-#define RGB_DI_PIN GP11 // Underglow.
-#define DRIVER_LED_TOTAL 36
-#define RGB_MATRIX_SPLIT { 18, 18 }
-#define RGB_MATRIX_CENTER { 133, 54 }
-
 /* VBUS detection. */
 #define USB_VBUS_PIN GP21
 
@@ -146,15 +138,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP17
 
 /* RGB settings. */
-#define RGBLED_NUM 36
-#define RGBLED_SPLIT \
-    { 18, 18 }
+// #define RGBLED_NUM 36
+// #define RGBLED_SPLIT
+//     { 18, 18 }
 
 /* RGB matrix support. */
 #ifdef RGB_MATRIX_ENABLE
+#    define RGB_DI_PIN GP11 // Underglow.
+#    define RGB_MATRIX_LED_COUNT 36
+#    define RGB_MATRIX_SPLIT { 18, 18 }
+#    define RGB_MATRIX_CENTER { 133, 54 }
+
 #    define SPLIT_TRANSPORT_MIRROR
-#    define RGB_MATRIX_LED_COUNT RGBLED_NUM
-#    define RGB_MATRIX_SPLIT RGBLED_SPLIT
+//#    define RGB_MATRIX_LED_COUNT RGBLED_NUM
+// #    define RGB_MATRIX_SPLIT RGBLED_SPLIT
 #    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255
 #    define RGB_DISABLE_WHEN_USB_SUSPENDED
 #    define RGB_MATRIX_KEYPRESSES
