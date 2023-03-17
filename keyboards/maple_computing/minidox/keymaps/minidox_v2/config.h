@@ -117,6 +117,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define CRC8_OPTIMIZE_SPEED
 
 /* Cirque trackpad over SPI. */
+#define SPLIT_POINTING_ENABLE
+#define POINTING_DEVICE_RIGHT
 #define SPI_SCK_PIN GP18
 #define SPI_MOSI_PIN GP19
 #define SPI_MISO_PIN GP16
