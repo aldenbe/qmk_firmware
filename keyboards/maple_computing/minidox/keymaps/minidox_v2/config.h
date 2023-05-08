@@ -43,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // #endif
 #define COMBO_VARIABLE_LEN
-#define COMBO_TERM 50
+#define COMBO_TERM 25
 #define COMBO_MUST_HOLD_MODS
 #define LEADER_PER_KEY_TIMING
 #define LEADER_TIMEOUT 300
