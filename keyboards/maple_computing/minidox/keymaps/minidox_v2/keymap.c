@@ -107,6 +107,8 @@ enum custom_keycodes {
 #define JA_STAB LSFT_T(KC_TAB)
 #define JA_NBSPC LT(_NAV, KC_BSPC)
 
+#define JA_MIDMB LT(0, KC_NO)
+
 #define KC_ADEN LT(_ADJUST, KC_END)
 #define KC_ADPU LT(_ADJUST, KC_PGUP)
 
@@ -174,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NAV] = LAYOUT(
   //────────┬────────┬────────┬────────┬────────┐                         ┌────────┬────────┬────────┬────────┬────────┐
-    KC_F1   ,KC_BTN2 ,KC_BTN3 ,KC_BTN1 ,KC_F5   ,                          KC_ASDN ,KC_ASUP ,KC_ASRP ,KC_ASON ,KC_ASOFF,
+    KC_F1   ,KC_BTN2 ,KC_BTN3 ,KC_BTN1 ,KC_F5   ,                          KC_WBAK , KC_BTN1,JA_MIDMB, KC_BTN2, KC_WFWD,
   //────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┤
     KC_F6   ,KC_LALT ,KC_LCTL ,KC_LSFT ,KC_TAB  ,                          KC_LEFT ,KC_DOWN ,KC_UP   ,KC_RIGHT,XXXXXXX ,
   //────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┤
@@ -522,3 +524,64 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 };
+
+
+// from https://docs.qmk.fm/#/feature_pointing_device?id=drag-scroll-or-mouse-scroll
+bool set_scrolling = false;
+bool set_caret = false;
+bool set_slow = false;
+int scroll_scaling = 10;
+int scroll_scale = 10;
+int caret_scale_horiz = 15;
+int caret_scale_vert = 50;
+int slow_scale = 5;
+int scroll_rollover_x = 0;
+int scroll_rollover_y = 0;
+int horiz = 0;
+int vert = 0;
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+
+    //scale = set_scrolling * scroll_scale + set_caret * caret_scale + set_slow * slow_scale;
+
+    if (set_scrolling) {
+        mouse_report.h = (mouse_report.x + scroll_rollover_x) / scroll_scale;
+        mouse_report.v = -(mouse_report.y + scroll_rollover_y) / scroll_scale;
+        scroll_rollover_x = (mouse_report.x + scroll_rollover_x) % scroll_scale;
+        scroll_rollover_y = (mouse_report.y + scroll_rollover_y) % scroll_scale;
+        mouse_report.x = 0;
+        mouse_report.y = 0;
+    }
+    // if (set_caret) {
+    //     horiz = (mouse_report.x + scroll_rollover_x) / caret_scale_horiz;
+    //     vert = -(mouse_report.y + scroll_rollover_y) / caret_scale_vert;
+    //     scroll_rollover_x = (mouse_report.x + scroll_rollover_x) % caret_scale_horiz;
+    //     scroll_rollover_y = (mouse_report.y + scroll_rollover_y) % caret_scale_vert;
+    //     int i;
+    //     // horizontal movement
+    //     for(i = 0; i < abs(horiz); i = i + 1){
+    //         if (horiz > 0){
+    //             tap_code16(KC_RIGHT);
+    //         } else {
+    //             tap_code16(KC_LEFT);
+    //         }
+    //     }
+    //     // vertical movement
+    //     for(i = 0; i < abs(vert); i = i + 1){
+    //         if (vert > 0){
+    //             tap_code16(KC_UP);
+    //         } else {
+    //             tap_code16(KC_DOWN);
+    //         }
+    //     }
+    //     mouse_report.x = 0;
+    //     mouse_report.y = 0;
+    // }
+    // if (set_slow){
+    //     scroll_rollover_x = (mouse_report.x + scroll_rollover_x) % slow_scale;
+    //     scroll_rollover_y = (mouse_report.y + scroll_rollover_y) % slow_scale;
+    //     mouse_report.x = (mouse_report.x + scroll_rollover_x) / slow_scale;
+    //     mouse_report.y = (mouse_report.y + scroll_rollover_y) / slow_scale;
+    // }
+    return mouse_report;
+}
