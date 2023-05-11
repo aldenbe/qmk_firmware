@@ -23,7 +23,7 @@ LTO_ENABLE = yes
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
 MOUSEKEY_ENABLE = yes
-EXTRAKEY_ENABLE = no
+EXTRAKEY_ENABLE = yes
 
 SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE = no
@@ -34,5 +34,5 @@ SERIAL_DRIVER = vendor
 WS2812_DRIVER = vendor
 
 POINTING_DEVICE_ENABLE = yes
-POINTING_DEVICE_DRIVER = cirque_pinnacle_spi # Assembled version uses SPI.
+POINTING_DEVICE_DRIVER = pmw3360 # Assembled version uses SPI.
 

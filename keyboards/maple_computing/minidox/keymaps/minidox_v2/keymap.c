@@ -11,6 +11,7 @@
 #define _NAV 3
 #define _ADJUST 4
 #define _LOWER 5
+#define _MOUSE 6
 
 typedef enum {
     TD_NONE,
@@ -36,6 +37,11 @@ void keyboard_post_init_user(void) {
     rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
     rgb_matrix_mode_noeeprom(default_animation);
     rgb_matrix_set_speed_noeeprom(default_speed);
+}
+
+void pointing_device_init_user(void) {
+    // set_auto_mouse_layer(<mouse_layer>); // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
+    set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
 }
 
 typedef struct {
@@ -80,7 +86,10 @@ enum custom_keycodes {
   NAV,
   ADJUST,
   LOWER,
-  ALTAB
+  MOUSE,
+  ALTAB,
+  CARET,
+  SLOW,
 };
 
 // Shortcut to make keymap more readable
@@ -124,6 +133,9 @@ enum custom_keycodes {
 #define HOME_K RSFT_T(KC_K)
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
+
+#include "pointing.h"
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -195,6 +207,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
   //────────┴────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┴────────┘
                       XXXXXXX , KC_BSPC,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX
+  //                 └────────┴────────┴────────┘                         └────────┴────────┴────────┘
+  ),
+
+  [_MOUSE] = LAYOUT(
+  //────────┬────────┬────────┬────────┬────────┐                         ┌────────┬────────┬────────┬────────┬────────┐
+    XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                          KC_WBAK , KC_BTN1,JA_MIDMB, KC_BTN2, KC_WFWD,
+  //────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┤
+    XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+  //────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┤
+    XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+  //────────┴────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┴────────┘
+                      XXXXXXX , XXXXXXX,XXXXXXX ,                          XXXXXXX ,TO(0)   ,XXXXXXX
   //                 └────────┴────────┴────────┘                         └────────┴────────┴────────┘
   )
 };
@@ -508,22 +532,24 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 // MACROS
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-    case ALTAB:
-        if (record->event.pressed) {
-            // when keycode QMKBEST is pressed
-            register_code(KC_LALT);
-            register_code(KC_TAB);
-            unregister_code(KC_TAB);
-        } else {
-            // when keycode ALTAB is released
-            unregister_code(KC_LALT);
-        }
-        break;
-    }
-    return true;
-};
+
+
+// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//     case ALTAB:
+//         if (record->event.pressed) {
+//             // when keycode QMKBEST is pressed
+//             register_code(KC_LALT);
+//             register_code(KC_TAB);
+//             unregister_code(KC_TAB);
+//         } else {
+//             // when keycode ALTAB is released
+//             unregister_code(KC_LALT);
+//         }
+//         break;
+//     }
+//     return true;
+// };
 
 
 // from https://docs.qmk.fm/#/feature_pointing_device?id=drag-scroll-or-mouse-scroll
@@ -552,36 +578,126 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
         mouse_report.x = 0;
         mouse_report.y = 0;
     }
-    // if (set_caret) {
-    //     horiz = (mouse_report.x + scroll_rollover_x) / caret_scale_horiz;
-    //     vert = -(mouse_report.y + scroll_rollover_y) / caret_scale_vert;
-    //     scroll_rollover_x = (mouse_report.x + scroll_rollover_x) % caret_scale_horiz;
-    //     scroll_rollover_y = (mouse_report.y + scroll_rollover_y) % caret_scale_vert;
-    //     int i;
-    //     // horizontal movement
-    //     for(i = 0; i < abs(horiz); i = i + 1){
-    //         if (horiz > 0){
-    //             tap_code16(KC_RIGHT);
-    //         } else {
-    //             tap_code16(KC_LEFT);
-    //         }
-    //     }
-    //     // vertical movement
-    //     for(i = 0; i < abs(vert); i = i + 1){
-    //         if (vert > 0){
-    //             tap_code16(KC_UP);
-    //         } else {
-    //             tap_code16(KC_DOWN);
-    //         }
-    //     }
-    //     mouse_report.x = 0;
-    //     mouse_report.y = 0;
-    // }
-    // if (set_slow){
-    //     scroll_rollover_x = (mouse_report.x + scroll_rollover_x) % slow_scale;
-    //     scroll_rollover_y = (mouse_report.y + scroll_rollover_y) % slow_scale;
-    //     mouse_report.x = (mouse_report.x + scroll_rollover_x) / slow_scale;
-    //     mouse_report.y = (mouse_report.y + scroll_rollover_y) / slow_scale;
-    // }
+    if (set_caret) {
+        horiz = (mouse_report.x + scroll_rollover_x) / caret_scale_horiz;
+        vert = -(mouse_report.y + scroll_rollover_y) / caret_scale_vert;
+        scroll_rollover_x = (mouse_report.x + scroll_rollover_x) % caret_scale_horiz;
+        scroll_rollover_y = (mouse_report.y + scroll_rollover_y) % caret_scale_vert;
+        int i;
+        // horizontal movement
+        for(i = 0; i < abs(horiz); i = i + 1){
+            if (horiz > 0){
+                tap_code16(KC_RIGHT);
+            } else {
+                tap_code16(KC_LEFT);
+            }
+        }
+        // vertical movement
+        for(i = 0; i < abs(vert); i = i + 1){
+            if (vert > 0){
+                tap_code16(KC_UP);
+            } else {
+                tap_code16(KC_DOWN);
+            }
+        }
+        mouse_report.x = 0;
+        mouse_report.y = 0;
+    }
+    if (set_slow){
+        scroll_rollover_x = (mouse_report.x + scroll_rollover_x) % slow_scale;
+        scroll_rollover_y = (mouse_report.y + scroll_rollover_y) % slow_scale;
+        mouse_report.x = (mouse_report.x + scroll_rollover_x) / slow_scale;
+        mouse_report.y = (mouse_report.y + scroll_rollover_y) / slow_scale;
+    }
     return mouse_report;
+}
+
+
+bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
+    switch(keycode) {
+        case JA_MIDMB:
+            return true;
+        case KC_WBAK:
+            return true;
+        case KC_WFWD:
+            return true;
+        default:
+            return false;
+    }
+    return  is_mouse_record_user(keycode, record);
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // if (keycode == DRAG_SCROLL && record->event.pressed) {
+    //     set_scrolling = !set_scrolling;
+    //     if (set_scrolling) {
+    //         pointing_device_set_cpi(100);
+    //     }
+    //     else {
+    //         pointing_device_set_cpi(PMW3360_CPI);
+    //     }
+    // }
+
+    switch (keycode) {
+    case ALTAB:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            register_code(KC_LALT);
+            register_code(KC_TAB);
+            unregister_code(KC_TAB);
+        } else {
+            // when keycode ALTAB is released
+            unregister_code(KC_LALT);
+        }
+        break;
+
+    case CARET:
+        if (record->event.pressed) {
+            set_caret = true;
+        } else {
+            set_caret = false;
+        }
+        break;
+    case SLOW:
+        if (record->event.pressed) {
+            set_slow = true;
+        } else {
+            set_slow = false;
+        }
+        break;
+    // case DRAG_SCROLL:
+    //     if (record->event.pressed) {
+    //         set_scrolling = true;
+    //     } else {
+    //         set_scrolling = false;
+    //     }
+    //     break;
+    case LT(0, KC_NO):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_BTN3); // Intercept tap function to send Ctrl-C
+        } else if (record->event.pressed) {
+            set_scrolling = true;
+        } else {
+            set_scrolling = false;
+        }
+        return false;
+    }
+
+    return true;
+}
+
+/* Disable auto-mouse on NAV layer */
+layer_state_t layer_state_set_user(layer_state_t state) {
+    // checks highest layer other than target layer
+    switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
+        case _NAV:
+            state = remove_auto_mouse_layer(state, false);
+            set_auto_mouse_enable(false);
+            break;
+        default:
+            set_auto_mouse_enable(true);
+            break;
+    }
+    // recommend that any code that makes adjustment based on auto mouse layer state would go here
+    return state;
 }

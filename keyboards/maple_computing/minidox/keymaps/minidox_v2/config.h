@@ -116,18 +116,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define CRC8_USE_TABLE
 #define CRC8_OPTIMIZE_SPEED
 
-/* Cirque trackpad over SPI. */
-#define SPLIT_POINTING_ENABLE
-#define POINTING_DEVICE_RIGHT
+/* SPI config */
 #define SPI_SCK_PIN GP18
 #define SPI_MOSI_PIN GP19
 #define SPI_MISO_PIN GP16
-#define POINTING_DEVICE_CS_PIN GP17
-#undef CIRQUE_PINNACLE_DIAMETER_MM
-#define CIRQUE_PINNACLE_DIAMETER_MM 40
-#define CIRQUE_PINNACLE_TAP_ENABLE
-#define POINTING_DEVICE_GESTURES_CURSOR_GLIDE_ENABLE
-#define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
+// #define SPI_SCK_PAL_MODE                     5
+// #define SPI_MOSI_PAL_MODE                    5
+// #define SPI_MISO_PAL_MODE                    5
+
+
+#define SPLIT_POINTING_ENABLE
+#define POINTING_DEVICE_RIGHT
+// #define POINTING_DEVICE_LEFT
+
+/* Cirque trackpad over SPI. */
+// #define POINTING_DEVICE_CS_PIN GP17
+// #undef CIRQUE_PINNACLE_DIAMETER_MM
+// #define CIRQUE_PINNACLE_DIAMETER_MM 40
+// #define CIRQUE_PINNACLE_TAP_ENABLE
+// #define POINTING_DEVICE_GESTURES_CURSOR_GLIDE_ENABLE
+// #define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
+
+/* Trackball setup */
+#define PMW33XX_CS_PIN GP17
+#define PMW3360_CPI 600
+// #define POINTING_DEVICE_INVERT_X
+#define POINTING_DEVICE_INVERT_Y
+#define ROTATIONAL_TRANSFORM_ANGLE  20
+// from tractyl-manuform
+#define PMW3360_SPI_MODE                     3
+#define PMW3360_SPI_DIVISOR                  64
+#define PMW3360_FIRMWARE_UPLOAD_FAST
+
+/* auto mouse setup*/
+// in config.h:
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+// only required if not setting mouse layer elsewhere
+#define AUTO_MOUSE_DEFAULT_LAYER 6
+
 
 /* OLED over i2c. */
 #define I2C1_CLOCK_SPEED 400000
