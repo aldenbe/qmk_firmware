@@ -218,7 +218,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┤
     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
   //────────┴────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┴────────┘
-                      XXXXXXX , XXXXXXX,XXXXXXX ,                          XXXXXXX ,TO(0)   ,XXXXXXX
+                      XXXXXXX ,JA_NBSPC,XXXXXXX ,                          XXXXXXX ,TO(0)   ,KC_NUMI
   //                 └────────┴────────┴────────┘                         └────────┴────────┴────────┘
   )
 };
