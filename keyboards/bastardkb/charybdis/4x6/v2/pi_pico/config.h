@@ -28,11 +28,11 @@
 /*?????*/
 
 /* VBUS detection. */
-#define USB_VBUS_PIN GP21
+//#define USB_VBUS_PIN GP21
 
 /* CRC. */
-#define CRC8_USE_TABLE
-#define CRC8_OPTIMIZE_SPEED
+//#define CRC8_USE_TABLE
+//#define CRC8_OPTIMIZE_SPEED
 
 // from tractyl-manuform
 #define PMW3360_SPI_MODE                     3
