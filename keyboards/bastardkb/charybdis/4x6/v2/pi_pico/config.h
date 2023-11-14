@@ -25,6 +25,21 @@
 // #define SPLIT_HAND_PIN GP15
 // #define SPLIT_HAND_PIN_LOW_IS_LEFT  // High -> right, Low -> left.
 
+/*?????*/
+
+/* VBUS detection. */
+#define USB_VBUS_PIN GP21
+
+/* CRC. */
+#define CRC8_USE_TABLE
+#define CRC8_OPTIMIZE_SPEED
+
+// from tractyl-manuform
+#define PMW3360_SPI_MODE                     3
+#define PMW3360_SPI_DIVISOR                  64
+#define PMW3360_FIRMWARE_UPLOAD_FAST
+
+/*end ????*/
 /* SPI & PMW3360 settings. */
 #define SPI_DRIVER SPID0
 #define SPI_SCK_PIN GP18

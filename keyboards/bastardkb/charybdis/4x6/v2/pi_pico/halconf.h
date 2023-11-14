@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,10 +17,6 @@
 
 #pragma once
 
-#include_next <mcuconf.h>
+#define HAL_USE_SPI TRUE
 
-#undef RP_SPI_USE_SPI0
-#define RP_SPI_USE_SPI0 TRUE
-
-#undef RP_SPI_USE_SPI1
-#define RP_SPI_USE_SPI1 TRUE
+#include_next <halconf.h>
