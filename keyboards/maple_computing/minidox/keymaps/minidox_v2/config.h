@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define USE_SERIAL
 
-#define MASTER_LEFT
+#define MASTER_RIGHT
 // #define EE_HANDS
 
 /* ws2812 RGB LED */
@@ -78,13 +78,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    undef MATRIX_ROW_PINS
 #endif
 #define MATRIX_ROW_PINS \
-{ GP2, GP3, GP4, GP5 }
+{ GP0, GP3, GP4, GP5 }
 
 #ifdef MATRIX_COL_PINS
 #    undef MATRIX_COL_PINS
 #endif
 #define MATRIX_COL_PINS \
-    { GP6, GP7, GP8, GP9, GP10 }
+    { GP2, GP1, GP9, GP6, GP7 }
 
 #ifdef DIODE_DIRECTION
 #undef DIODE_DIRECTION
@@ -107,7 +107,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef SOFT_SERIAL_PIN
 #    undef SOFT_SERIAL_PIN
 #endif
-#define SOFT_SERIAL_PIN GP15
+#define SOFT_SERIAL_PIN GP12
 
 /* VBUS detection. */
 #define USB_VBUS_PIN GP21
